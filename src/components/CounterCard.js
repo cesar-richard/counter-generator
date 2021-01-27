@@ -1,15 +1,18 @@
 import React from "react";
 import { Button, Card, Icon, Label } from "semantic-ui-react";
+import { Event } from "../Tracking";
 
 const CounterCard = ({ name, onDelete }) => {
   const [count, setCount] = React.useState(0);
   const increment = () => {
     setCount(count + 1);
+    Event("COUNTER", "Incremented value", "CounterCard");
     return;
   };
   const decrement = () => {
     if (count === 0) return;
     setCount(count - 1);
+    Event("COUNTER", "Decremented value", "CounterCard");
     return;
   };
   return (
