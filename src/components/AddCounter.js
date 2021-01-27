@@ -4,15 +4,23 @@ import CardList from "./CardList";
 import uuid from "react-uuid";
 
 const AddCounter = ({ children, onAddCard }) => {
-  const [list, setList] = React.useState([]);
+  const [list, setList] = React.useState(
+    localStorage.getItem("countersState")
+      ? JSON.parse(localStorage.getItem("countersState"))
+      : []
+  );
   const [name, setName] = React.useState("");
 
   const addCard = () => {
-    setList([{ name, uuid: uuid() }, ...list]);
+    const newList = [{ name, uuid: uuid() }, ...list];
+    setList(newList);
     setName("");
+    localStorage.setItem("countersState", JSON.stringify(newList));
   };
   const onCardDelete = uuid => {
-    setList(list.filter(x => x.uuid !== uuid));
+    const newList = list.filter(x => x.uuid !== uuid);
+    setList(newList);
+    localStorage.setItem("countersState", JSON.stringify(newList));
   };
 
   return (
