@@ -1,5 +1,5 @@
 {
-  "name": "Counter Generator",
+  "name": "counter-generator",
   "version": "1.2.10",
   "private": true,
   "dependencies": {
