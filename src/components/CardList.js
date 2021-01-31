@@ -10,6 +10,7 @@ function CardList({ list, onCardDelete }) {
           return (
             <CounterCard
               key={x.uuid}
+              uuid={x.uuid}
               name={x.name}
               onDelete={() => {
                 onCardDelete(x.uuid);

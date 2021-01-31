@@ -1,5 +1,6 @@
 import React from "react";
-import { Input, Icon, Menu, Segment } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
+import NavMenu from "./Menu";
 import CardList from "./CardList";
 import uuid from "react-uuid";
 import { Event } from "../Tracking";
@@ -10,15 +11,33 @@ const AddCounter = ({ children, onAddCard }) => {
       ? JSON.parse(localStorage.getItem("countersState"))
       : []
   );
-  const [name, setName] = React.useState("");
 
-  const addCard = () => {
-    const newList = [{ name, uuid: uuid() }, ...list];
-    setList(newList);
-    setName("");
+  const addCounter = name => {
+    console.log(list);
+    const newList = [{ name, uuid: uuid(), count: 0 }, ...list];
     localStorage.setItem("countersState", JSON.stringify(newList));
-    Event("CARD", "Added card", "AddCounter");
+    setList(newList);
   };
+
+  const sortCounters = () => {
+    const newList = localStorage.getItem("countersState")
+      ? JSON.parse(localStorage.getItem("countersState"))
+      : [];
+    newList.sort((a, b) => {
+      return b.count - a.count;
+    });
+    console.log(newList);
+    localStorage.setItem("countersState", JSON.stringify(newList));
+    setList(newList);
+    Event("CARD", "Sorted cards", "AddCounter");
+  };
+
+  const clear = () => {
+    localStorage.setItem("countersState", []);
+    setList([]);
+    Event("CARD", "Clear", "AddCounter");
+  };
+
   const onCardDelete = uuid => {
     const newList = list.filter(x => x.uuid !== uuid);
     setList(newList);
@@ -28,15 +47,11 @@ const AddCounter = ({ children, onAddCard }) => {
 
   return (
     <>
-      <Menu attached="top">
-        <Menu.Menu>
-          <Input
-            icon={<Icon name="plus" inverted circular link onClick={addCard} />}
-            placeholder="Ajouter"
-            onChange={(e, d) => setName(d.value)}
-          />
-        </Menu.Menu>
-      </Menu>
+      <NavMenu
+        addCounter={addCounter}
+        sortCounters={sortCounters}
+        clear={clear}
+      />
       <Segment attached="bottom">
         <CardList list={list} onCardDelete={onCardDelete} />
       </Segment>
