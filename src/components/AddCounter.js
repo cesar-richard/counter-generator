@@ -13,7 +13,6 @@ const AddCounter = ({ children, onAddCard }) => {
   );
 
   const addCounter = name => {
-    console.log(list);
     const newList = [{ name, uuid: uuid(), count: 0 }, ...list];
     localStorage.setItem("countersState", JSON.stringify(newList));
     setList(newList);
@@ -44,7 +43,6 @@ const AddCounter = ({ children, onAddCard }) => {
       }
       return 0;
     });
-    console.log(newList);
     localStorage.setItem("countersState", JSON.stringify(newList));
     setList(newList);
     Event("CARD", "Sorted cards", "AddCounter");
