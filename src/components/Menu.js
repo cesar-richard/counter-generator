@@ -8,6 +8,7 @@ const NavMenu = ({ addCounter, clear, sortCounters }) => {
     <Menu attached="top">
       <Menu.Menu style={{ width: "100%" }}>
         <Input
+          value={name}
           icon={
             <Icon
               name="plus"
@@ -15,8 +16,9 @@ const NavMenu = ({ addCounter, clear, sortCounters }) => {
               circular
               link
               onClick={() => {
-                addCounter(name);
+                if (name === "") return;
                 setName("");
+                addCounter(name);
               }}
             />
           }
