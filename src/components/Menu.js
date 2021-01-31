@@ -1,7 +1,12 @@
 import React from "react";
 import { Button, Input, Icon, Menu } from "semantic-ui-react";
 
-const NavMenu = ({ addCounter, clear, sortCounters }) => {
+const NavMenu = ({
+  addCounter,
+  clear,
+  sortCountersValues,
+  sortCountersNames
+}) => {
   const [name, setName] = React.useState("");
 
   return (
@@ -27,10 +32,16 @@ const NavMenu = ({ addCounter, clear, sortCounters }) => {
           style={{ width: "100%" }}
         />
         <Button
-          content="Sort"
+          content="Sort by value"
           labelPosition="left"
           icon="sort amount down"
-          onClick={sortCounters}
+          onClick={sortCountersValues}
+        />
+        <Button
+          content="Sort by name"
+          labelPosition="left"
+          icon="sort alphabet down"
+          onClick={sortCountersNames}
         />
         <Button
           negative

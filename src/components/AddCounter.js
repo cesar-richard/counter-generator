@@ -19,12 +19,30 @@ const AddCounter = ({ children, onAddCard }) => {
     setList(newList);
   };
 
-  const sortCounters = () => {
+  const sortCountersValues = () => {
     const newList = localStorage.getItem("countersState")
       ? JSON.parse(localStorage.getItem("countersState"))
       : [];
     newList.sort((a, b) => {
       return b.count - a.count;
+    });
+    localStorage.setItem("countersState", JSON.stringify(newList));
+    setList(newList);
+    Event("CARD", "Sorted cards", "AddCounter");
+  };
+
+  const sortCountersNames = () => {
+    const newList = localStorage.getItem("countersState")
+      ? JSON.parse(localStorage.getItem("countersState"))
+      : [];
+    newList.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
     });
     console.log(newList);
     localStorage.setItem("countersState", JSON.stringify(newList));
@@ -49,7 +67,8 @@ const AddCounter = ({ children, onAddCard }) => {
     <>
       <NavMenu
         addCounter={addCounter}
-        sortCounters={sortCounters}
+        sortCountersValues={sortCountersValues}
+        sortCountersNames={sortCountersNames}
         clear={clear}
       />
       <Segment attached="bottom">
